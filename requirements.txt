@@ -1,8 +1,8 @@
 streamlit
-numpy
-pandas
 scikit-learn
-joblib
+pandas
+numpy
 matplotlib
 shap
 streamlit-shap
+reportlab
