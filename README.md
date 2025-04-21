@@ -17,13 +17,12 @@ Features :
 - Easy-to-run and open-source
 
 Project Structure :
-├── app.py                -Streamlit frontend interface
-├── heart_health.py       -ML model prediction logic
-├── Heart Health.ipynb    -EDA and model building notebook
-├── heart_model.joblib    -Trained Logistic Regression model
-├── requirements.txt      -Python dependencies
-├── README.md             -Project instructions & overview
-└── .devcontainer/        -VS Code Dev Container setup
+app.py -Streamlit frontend interface,
+heart_health.py -ML model prediction logic, Heart Health.ipynb -EDA and model building notebook, 
+heart_model.joblib -Trained Logistic Regression model, 
+requirements.txt -Python dependencies, 
+README.md -Project instructions & overview, 
+.devcontainer -VS Code Dev Container setup.
 
 Technologies Used : 
 -Python 3.8+
