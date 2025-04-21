@@ -3,12 +3,12 @@ import pandas as pd
 import numpy as np
 import joblib
 import shap
-from streamlit_shap import st_shap  # install with: pip install streamlit_shap
+from streamlit_shap import st_shap  
 
-# Load model
+
 model = joblib.load("heart_model.joblib")
 
-# Page config
+
 st.set_page_config(page_title="Heart Health Predictor", page_icon="🫀", layout="centered")
 
 st.title("🫀 Heart Health Predictor")
@@ -16,7 +16,7 @@ st.markdown("This app predicts the risk of heart disease based on patient data."
 
 st.subheader("Enter your info here")
 
-# Input form
+
 age = st.selectbox("Age", range(20, 100))
 sex = st.selectbox("Sex", ["Male", "Female"])
 cp = st.selectbox("Chest Pain Type", ["typical", "atypical", "nonanginal", "asymptomatic"])
@@ -31,12 +31,12 @@ slope = st.selectbox("Slope of peak exercise ST segment", [0, 1, 2])
 ca = st.selectbox("Number of major vessels colored by fluoroscopy", [0, 1, 2, 3, 4])
 thal = st.selectbox("Thalassemia", ["normal", "fixed", "reversible"])
 
-# Mapping inputs
+
 sex_map = {"Male": 1, "Female": 0}
 fbs_map = {"Yes": 1, "No": 0}
 exang_map = {"Yes": 1, "No": 0}
 
-# Create input DataFrame
+
 input_dict = {
     "Age": age,
     "Sex": sex_map[sex],
@@ -49,26 +49,26 @@ input_dict = {
     "Oldpeak": oldpeak,
     "Slope": slope,
     "Ca": ca,
-    # One-hot encode ChestPain
+    
     f"ChestPain_{cp}": 1,
-    # One-hot encode Thal
+    
     f"Thal_{thal}": 1
 }
 
-# Fill missing one-hot features with 0
+
 all_features = model.feature_names_in_
 input_df = pd.DataFrame([input_dict])
 for col in all_features:
     if col not in input_df.columns:
         input_df[col] = 0
 
-input_df = input_df[all_features]  # reorder to match model
+input_df = input_df[all_features]  
 
 st.subheader("Heart Disease Prediction with SHAP")
 st.write("### Input Data")
 st.dataframe(input_df)
 
-# Make prediction
+
 prediction = model.predict(input_df)[0]
 probability = model.predict_proba(input_df)[0][1]
 
@@ -80,7 +80,7 @@ else:
 
 st.write(f"**Probability of Heart Disease:** `{probability:.2f}`")
 
-# SHAP explanation
+
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -97,9 +97,9 @@ import tempfile
 
 st.write("### 📥 Download PDF Report")
 
-# Create a PDF report in memory
+
 def generate_pdf():
-    # Use a temporary file to store the PDF
+    
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmpfile:
         c = canvas.Canvas(tmpfile.name, pagesize=letter)
         width, height = letter
@@ -132,7 +132,7 @@ def generate_pdf():
 
         return tmpfile.name
 
-# Generate the PDF and create download button
+
 pdf_file_path = generate_pdf()
 with open(pdf_file_path, "rb") as file:
     st.download_button(
